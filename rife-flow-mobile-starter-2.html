@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0b13">
+<title>RIFE FLOW — Frame Interpolation</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b13;--panel:#151522;--line:#2b2b40;--muted:#9a9ab0;--purple:#7651e8;--blue:#4c7dff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#211638 0,transparent 38%),var(--bg);color:#f5f3ff;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:760px;margin:auto;padding:22px 16px 38px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.12em}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#8060ff,#4c7dff);font-size:25px}.pill{margin-left:auto;border:1px solid #244a3f;background:#10231f;color:#9ce3c8;border-radius:30px;padding:6px 10px;font-size:11px;letter-spacing:.06em}
+.hero{text-align:center;padding:42px 0 26px}.eyebrow{color:#b9a5ff;letter-spacing:.22em;font-size:12px;font-weight:800}.hero h1{font-size:clamp(30px,7vw,44px);line-height:1.13;margin:12px 0}.grad{background:linear-gradient(90deg,#b99bff,#76a5ff);color:transparent;background-clip:text}.hero p{color:var(--muted);max-width:550px;margin:14px auto 0}
+.panel{background:linear-gradient(145deg,#171725,#11111c);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 20px 60px #0004}.drop{border:1px dashed #555071;border-radius:18px;padding:28px 14px;text-align:center;background:#10101b;cursor:pointer}.uploadicon{width:60px;height:60px;border-radius:20px;background:#241b3b;border:1px solid #3d315b;display:grid;place-items:center;margin:0 auto 14px;font-size:26px;color:#bca8ff}.drop strong{display:block;font-size:19px}.sub{color:var(--muted);font-size:13px}.filename{margin-top:10px;color:#b9e9d6;overflow-wrap:anywhere}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.field.full{grid-column:1/-1}label{display:block;color:#b7b5c9;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:7px}select,button{width:100%;border-radius:13px;border:1px solid #343449;background:#0e0e19;color:#f6f4ff;padding:13px;font:inherit}button{cursor:pointer;font-weight:750}.seg{display:flex;background:#0e0e19;border:1px solid #343449;border-radius:13px;padding:4px;gap:4px}.seg button{border:0;background:transparent;color:#aaa8be;padding:9px}.seg button.active{background:var(--purple);color:white}.check{display:flex;align-items:center;gap:10px;color:#c6c4d6;font-size:13px;margin:12px 0}.check input{accent-color:var(--purple);width:17px;height:17px}.primary{margin-top:18px;background:linear-gradient(100deg,#6540d7,#355ed7);border:0;padding:15px}.primary:disabled{opacity:.6;cursor:not-allowed}.notice{margin-top:18px;padding:14px;border-radius:15px;background:#1b1725;border:1px solid #383047;color:#c9c4db;font-size:12px}.status{margin-top:14px;color:#c6c2dc;font-size:13px;overflow-wrap:anywhere}footer{text-align:center;color:#66667d;font-size:12px;padding:25px 0}
+@media(max-width:480px){main{padding:18px 12px 30px}.panel{padding:14px;border-radius:20px}.fields{grid-template-columns:1fr;gap:14px}.field.full{grid-column:auto}.hero{padding-top:35px}.pill{font-size:9px;padding:5px 8px}}
+</style>
+</head>
+<body><main>
+<header class="brand"><div class="logo">✦</div><div>RIFE <span class="grad">FLOW</span></div><span class="pill">● LOCAL WORKSPACE</span></header>
+<section class="hero"><div class="eyebrow">AI FRAME INTERPOLATION</div><h1>Smoother motion.<br><span class="grad">Made for anime edits.</span></h1><p>A simple browser workspace for experimenting with RIFE frame interpolation.</p></section>
+<section class="panel">
+<label for="video" class="drop" id="drop"><div class="uploadicon">⇧</div><strong>Choose your video</strong><div class="sub">Tap to browse files on your device</div><div class="sub" style="margin-top:12px">MP4 · MOV · WEBM · MKV (browser support may vary)</div><div class="filename" id="filename"></div></label>
+<input id="video" type="file" accept="video/*,.mkv" hidden>
+<div class="fields">
+<div class="field full"><label for="model">MODEL</label><select id="model"><option value="anime">RIFE Anime (planned)</option><option value="general">RIFE General (planned)</option></select></div>
+<div class="field"><label for="fps">TARGET FPS</label><select id="fps"><option>30 FPS</option><option selected>60 FPS</option><option>120 FPS</option></select></div>
+<div class="field"><label>FRAME MULTIPLIER</label><div class="seg" id="multipliers"><button class="active" data-value="2">2×</button><button data-value="4">4×</button><button data-value="8">8×</button></div></div>
+<div class="field full"><label for="quality">PROCESSING PRESET</label><select id="quality"><option>Fast (planned)</option><option selected>Balanced (planned)</option><option>Quality (planned)</option></select></div>
+</div>
+<div class="check"><input type="checkbox" id="scene" checked><label for="scene" style="margin:0;letter-spacing:0">Scene-change detection (planned)</label></div>
+<div class="check"><input type="checkbox" id="audio" checked><label for="audio" style="margin:0;letter-spacing:0">Keep original audio on export (planned)</label></div>
+<button class="primary" id="start" disabled>Choose a video first</button><div class="status" id="status" aria-live="polite">Ready — no video selected.</div>
+<div class="notice"><strong>Prototype notice:</strong> This page currently supports local file selection and settings only. The RIFE model, interpolation processing, and MP4 export still need to be connected. Your selected video is not uploaded anywhere by this page.</div>
+</section><footer>RIFE FLOW · Browser UI prototype · Local file selection only</footer>
+</main>
+<script>
+const fileInput=document.getElementById('video'), filename=document.getElementById('filename'), start=document.getElementById('start'), status=document.getElementById('status');
+document.getElementById('drop').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.click()}});
+fileInput.addEventListener('change',()=>{const f=fileInput.files&&fileInput.files[0];if(!f){filename.textContent='';start.disabled=true;start.textContent='Choose a video first';return}filename.textContent=f.name+' · '+(f.size/1024/1024).toFixed(1)+' MB';start.disabled=false;start.textContent='Start interpolation';status.textContent='File selected locally. AI processing is not connected yet.'});
+document.querySelectorAll('#multipliers button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#multipliers button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}));
+start.addEventListener('click',()=>{status.textContent='Prototype only: RIFE inference and video export have not been implemented. No processing has started.';});
+</script></body></html>
